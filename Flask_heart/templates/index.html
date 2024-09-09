@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Predictor</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        background-color: black;
+    }
+</style>
+
+<body>
+    <div class="container mt-4">
+        <!-- Header -->
+        <header class="mb-4">
+            <h1 class="text-center" style="color: white;">Heart Disease Prediction</h1>
+        </header>
+
+        <!-- Row for cards -->
+        <div class="row">
+            <!-- First Card: Form -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title text-center">Predictor Form</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="/predict" method="POST">
+                            <div class="form-group">
+                                <label for="age">Age:</label>
+                                <input type="number" class="form-control" id="age" name="age" required>
+                                <small class="form-text text-muted">Enter your age in years.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="sex">Sex:</label>
+                                <div>
+                                    <label><input type="radio" id="sex" name="sex" value="1" required> Male(1)</label>
+                                    <label><input type="radio" id="sex" name="sex" value="0" required> Female(0)</label>
+                                </div>
+                                <small class="form-text text-muted">Select your gender.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="cp">Chest Pain Type:</label>
+                                <select class="form-control" id="cp" name="cp" required>
+                                    <option value="0">Asymptomatic(0)</option>
+                                    <option value="1">Non-Anginal Pain(1)</option>
+                                    <option value="2">Atypical Angina(2)</option>
+                                    <option value="3">Typical Angina(3)</option>
+                                </select>
+                                <small class="form-text text-muted">Choose the type of chest pain you experience.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="trestbps">Resting Blood Pressure (mm Hg):</label>
+                                <input type="number" class="form-control" id="trestbps" name="trestbps" required>
+                                <small class="form-text text-muted">Provide your resting blood pressure in mm Hg.</small>
+                                <small class="form-text text-muted">Hypertensive (greater than 140/90 mm Hg) (high risk)</small>
+                                <small class="form-text text-muted">Prehypertensive (120-139/80-89 mm Hg) (borderline high)</small>
+                                <small class="form-text text-muted">Normal (less than 120/80 mm Hg) (desirable)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="chol">Serum Cholesterol (mg/dl):</label>
+                                <input type="number" class="form-control" id="chol" name="chol" required>
+                                <small class="form-text text-muted">Enter your serum cholesterol level in mg/dl.</small>
+                                <small class="form-text text-muted">Greater than 240 mg/dl (high risk)</small>
+                                <small class="form-text text-muted">200 to 239 mg/dl (borderline high)</small>
+                                <small class="form-text text-muted">Less than 200 mg/dl (desirable)</small>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="fbs">Fasting Blood Sugar:</label>
+                                <div>
+                                    <label><input type="radio" id="fbs" name="fbs" value="1" required> Greater than 120 mg/dl (1)</label>
+                                    <label><input type="radio" id="fbs" name="fbs" value="0" required> Less than or equal to 120 mg/dl (0)</label>
+                                </div>
+                                <small class="form-text text-muted">Indicate if your fasting blood sugar is greater than 120 mg/dl(danger).</small>
+                                <small class="form-text text-muted">Greater than 120 mg/dl (most dangerous)</small>
+                                <small class="form-text text-muted">Less than or equal to 120 mg/dl (least dangerous)</small>                    
+                            </div>
+                            <div class="form-group">
+                                <label for="restecg">Resting Electrocardiographic Results:</label>
+                                <select class="form-control" id="restecg" name="restecg" required>
+                                    <option value="0">Normal(0)</option>
+                                    <option value="1">ST-T wave abnormality (1)</option>
+                                    <option value="2">Left ventricular hypertrophy(2)</option>
+                                </select>
+                                <small class="form-text text-muted">Select your resting electrocardiographic result.</small>
+                                <small class="form-text text-muted">Normal (least dangerous)</small>
+                                <small class="form-text text-muted">ST-T wave abnormality</small>
+                                <small class="form-text text-muted">Left ventricular hypertrophy (most dangerous)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="thalach">Maximum Heart Rate Achieved:</label>
+                                <input type="number" class="form-control" id="thalach" name="thalach" required>
+                                <small class="form-text text-muted">Enter the maximum heart rate achieved during exercise.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="exang">Exercise Induced Angina:</label>
+                                <div>
+                                    <label><input type="radio" id="exang" name="exang" value="1" required> Yes</label>
+                                    <label><input type="radio" id="exang" name="exang" value="0" required> No</label>
+                                </div>
+                                <small class="form-text text-muted">Specify if you experience angina induced by exercise.</small>
+                                <small class="form-text text-muted">If exercise-induced angina is present, the danger is higher.</small>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="oldpeak">Depression Induced by Exercise Relative to Rest:</label>
+                                <input type="number" class="form-control" id="oldpeak" name="oldpeak" step="0.1" required>
+                                <small class="form-text text-muted">Provide the depression level induced by exercise relative to rest.</small>
+                                <small class="form-text text-muted">Higher depression induced by exercise relative to rest is more dangerous.</small>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="slope">Slope of the Peak Exercise ST Segment:</label>
+                                <select class="form-control" id="slope" name="slope" required>
+                                    <option value="1">Upsloping(1)</option>
+                                    <option value="2">Flat(2)</option>
+                                    <option value="3">Downsloping(3)</option>
+                                </select>
+                                <small class="form-text text-muted">Select the slope of the peak exercise ST segment.</small>
+                                <small class="form-text text-muted">Downsloping (most dangerous)</small>
+                                <small class="form-text text-muted">Flat(middle dangerous)</small>
+                                <small class="form-text text-muted">Upsloping (least dangerous)</small>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="ca">Number of Major Vessels Colored by Fluoroscopy:</label>
+                                <input class="form-control" id="ca" name="ca" required type="number" >
+                                <small class="form-text text-muted">Indicate the number of major vessels colored by fluoroscopy.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="thal">Thalassemia:</label>
+                                <select class="form-control" id="thal" name="thal" required>
+                                    <option value="0">No Thalassemia(0)</option>
+                                    <option value="3">Reversible defect(3)</option>
+                                    <option value="1">Normal(1)</option>
+                                    <option value="2">Fixed defect(2)</option>
+                                </select>
+                                <small class="form-text text-muted">Choose the type of thalassemia.</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Second Card: Project Description -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title text-center">Project Description</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            This project aims to predict the likelihood of heart disease based on a variety of health metrics. 
+                            Below is a brief description of each input field to assist you in providing accurate information:
+                        </p>
+                        <ul>
+                            <li><strong>Age:</strong> Your age in years.</li>
+                            <li><strong>Sex:</strong> Your gender. Choose between Male and Female.</li>
+                            <li><strong>Chest Pain Type:</strong> Type of chest pain experienced, ranging from typical angina to asymptomatic.</li>
+                            <li><strong>Resting Blood Pressure:</strong> Your blood pressure measured in mm Hg when at rest.</li>
+                            <li><strong>Serum Cholesterol:</strong> Your cholesterol level measured in mg/dl.</li>
+                            <li><strong>Fasting Blood Sugar:</strong> Indicates whether your fasting blood sugar level is above or below 120 mg/dl.</li>
+                            <li><strong>Resting Electrocardiographic Results:</strong> Results from an ECG test indicating normal or abnormal findings.</li>
+                            <li><strong>Maximum Heart Rate Achieved:</strong> The highest heart rate reached during exercise.</li>
+                            <li><strong>Exercise Induced Angina:</strong> Whether you experience angina (chest pain) during exercise.</li>
+                            <li><strong>Depression Induced by Exercise Relative to Rest:</strong> Level of depression induced by exercise compared to rest.</li>
+                            <li><strong>Slope of the Peak Exercise ST Segment:</strong> The slope of the ST segment during peak exercise, indicating how the heart responds.</li>
+                            <li><strong>Number of Major Vessels Colored by Fluoroscopy:</strong> Number of major blood vessels visible through fluoroscopy.</li>
+                            <li><strong>Thalassemia:</strong> A blood disorder that affects the body’s ability to produce hemoglobin and red blood cells.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% if prediction is not none %}
+        <!-- Prediction Modal -->
+        <div class="modal fade" id="predictionModal" tabindex="-1" role="dialog" aria-labelledby="predictionModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content {% if percentage|float < 50 %}bg-success{% else %}bg-danger{% endif %}">            <div class="modal-header">
+                        <h3 class="modal-title text-center" id="predictionModalLabel">Prediction Result</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>The model predicts a <strong class="text-light">{{ percentage }}%</strong> chance of heart disease.</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-{% if percentage|float < 50 %}danger{% else %}success{% endif %}" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    {% endif %}
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ("{{ prediction }}" !== "") {
+            $('#predictionModal').modal('show');
+        }
+    });
+</script>
+
+
+</body>
+
+</html>
